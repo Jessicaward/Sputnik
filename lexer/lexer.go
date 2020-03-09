@@ -61,6 +61,10 @@ func (l *Lexer) NextToken() token.Token {
 
 			//Have to return token here as readIdentifier() calls readChar to allow for entire identifier to be read
 			return tok
+		} else if isDigit(l.ch) {
+			tok.Type = token.INT
+			tok.Literal = l.readNumber()
+			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
 		}
@@ -83,8 +87,8 @@ func (l *Lexer) readIdentifier() string {
 }
 
 //This function 'eats' white space.. essentially skipping over each tab, space, newline etc until a valid character is found
-func (l *Lexer) skupWhitespace() {
-	for l.ch == '' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+func (l *Lexer) skipWhitespace() {
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
 		l.readChar()
 	}
 }
@@ -93,4 +97,18 @@ func (l *Lexer) skupWhitespace() {
 //Not just A-Za-z.. but also allowed special characters
 func isLetter(ch byte) bool {
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_' || ch == '-' || ch == '@'
+}
+
+//Having a function that loops over next chars will allow us to read multi digit numbers
+func (l *Lexer) readNumber() string {
+	position := l.position
+	for isDigit(l.ch) {
+		l.readChar()
+	}
+
+	return l.input[position:l.position]
+}
+
+func isDigit(ch byte) bool {
+	return '0' <= ch && ch <= '9'
 }
