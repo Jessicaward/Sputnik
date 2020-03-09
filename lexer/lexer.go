@@ -32,6 +32,8 @@ func (l *Lexer) readChar() {
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
+	l.skipWhitespace()
+
 	switch l.ch {
 	case '=':
 		tok = newToken(token.ASSIGN, l.ch)
@@ -55,6 +57,9 @@ func (l *Lexer) NextToken() token.Token {
 	default:
 		if isLetter(l.ch) {
 			tok.Literal = l.readIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
+
+			//Have to return token here as readIdentifier() calls readChar to allow for entire identifier to be read
 			return tok
 		} else {
 			tok = newToken(token.ILLEGAL, l.ch)
@@ -74,7 +79,14 @@ func (l *Lexer) readIdentifier() string {
 	for isLetter(l.ch) {
 		l.readChar()
 	}
-	return l.input(position:l.position)
+	return l.input[position:l.position]
+}
+
+//This function 'eats' white space.. essentially skipping over each tab, space, newline etc until a valid character is found
+func (l *Lexer) skupWhitespace() {
+	for l.ch == '' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+		l.readChar()
+	}
 }
 
 //This checks if the character being analysed is a valid letter.
