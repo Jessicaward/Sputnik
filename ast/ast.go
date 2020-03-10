@@ -1,6 +1,6 @@
 package ast
 
-import "go/token"
+import "sputnik/token"
 
 //Everything in AST is a node.
 //There are two types of nodes; statements and expressions.
