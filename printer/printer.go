@@ -1,4 +1,4 @@
-package utilities
+package printer
 
 import (
 	"fmt"
@@ -28,15 +28,19 @@ func PrintWarning(output string) {
 	color.Yellow(output)
 }
 
-func Print(output string) {
+func PrintInformation(output string) {
+	color.Cyan(output)
+}
+
+func Println(output string) {
 	//We shouldn't assume the colour of the terminal they're using.
 	fmt.Println(output)
 }
 
-func PrintPrompt(output string) {
-	color.Magenta(output)
+func Print(output string) {
+	fmt.Print(output)
 }
 
 func PrintLogo() {
-	color.Magenta(ASCIILOGO)
+	color.Cyan(ASCIILOGO)
 }
