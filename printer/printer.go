@@ -42,5 +42,5 @@ func Print(output string) {
 }
 
 func PrintLogo() {
-	color.Cyan(ASCIILOGO)
+	color.Magenta(ASCIILOGO)
 }

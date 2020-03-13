@@ -3,6 +3,7 @@ package main
 import (
 	"Sputnik/printer"
 	"Sputnik/repl"
+	"fmt"
 	"os"
 	"os/user"
 )
@@ -14,7 +15,7 @@ func main() {
 		panic(err)
 	}
 
-	printer.Println("Hello %s!\n", user.Username)
+	printer.Println(fmt.Sprintln("Hello,", user.Username))
 	printer.Println("Welcome to the Sputnik programming language!")
 	printer.PrintLogo()
 	repl.Start(os.Stdin, os.Stdout)
