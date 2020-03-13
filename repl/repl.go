@@ -1,10 +1,12 @@
 package repl
 
 import (
+	"Sputnik/printer"
 	"bufio"
 	"fmt"
 	"io"
-	
+	"os"
+
 	"sputnik/lexer"
 	"sputnik/token"
 )
@@ -18,7 +20,7 @@ func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
 
 	for {
-		fmt.Printf(PROMPT)
+		printer.Print(PROMPT)
 		scanned := scanner.Scan()
 
 		if !scanned {
@@ -26,10 +28,15 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
+
+		if line == "quit" || line == "exit" {
+			os.Exit(3)
+		}
+
 		l := lexer.New(line)
 
 		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
-			fmt.Printf("%+v\n", tok)
+			printer.PrintInformation(fmt.Sprintf("%+v\n", tok))
 		}
 	}
 }
