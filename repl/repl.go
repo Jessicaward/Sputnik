@@ -4,7 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	
+	"os"
+
 	"sputnik/lexer"
 	"sputnik/token"
 )
@@ -26,6 +27,11 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
+
+		if line == "quit" || line == "exit" {
+			os.Exit(3)
+		}
+
 		l := lexer.New(line)
 
 		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {
