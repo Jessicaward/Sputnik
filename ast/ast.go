@@ -22,6 +22,11 @@ type Program struct {
 	Statements []Statement
 }
 
+type Identifier struct {
+	Token token.Token
+	Value string
+}
+
 //This has both an identifier and an expression. The expression is for when the identifier is "used"
 type LetStatement struct {
 	Token token.Token
@@ -29,22 +34,17 @@ type LetStatement struct {
 	Value Expression
 }
 
-func (ls *LetStatement) statementNode()       {}
-func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
-
 //A return statement consists of two elements, the return token and the expression that will be returned.
 type ReturnStatement struct {
 	Token       token.Token
 	ReturnValue Expression
 }
 
+func (ls *LetStatement) statementNode()       {}
+func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
+
 func (rs *ReturnStatement) statementNode()       {}
 func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
-
-type Identifier struct {
-	Token token.Token
-	Value string
-}
 
 func (i *Identifier) statementNode()       {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
