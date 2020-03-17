@@ -58,7 +58,7 @@ func (ls *LetStatement) String() string {
 	var out bytes.Buffer
 
 	out.WriteString(ls.TokenLiteral() + " ")
-	out.WriteString(ls.Name.Value)
+	out.WriteString(ls.Name.String())
 	out.WriteString(" = ")
 
 	if ls.Value != nil {
@@ -98,6 +98,9 @@ func (es *ExpressionStatement) String() string {
 
 func (i *Identifier) statementNode()       {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
+func (i *Identifier) String() string {
+	return i.Value
+}
 
 func (p *Program) TokenLiteral() string {
 	if len(p.Statements) > 0 {
