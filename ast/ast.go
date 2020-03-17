@@ -40,11 +40,19 @@ type ReturnStatement struct {
 	ReturnValue Expression
 }
 
+type ExpressionStatement struct {
+	Token token.Token
+	Expression Expression
+}
+
 func (ls *LetStatement) statementNode()       {}
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
 
 func (rs *ReturnStatement) statementNode()       {}
 func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
+
+func (es *ExpressionStatement) statementNode() {}
+func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }
 
 func (i *Identifier) statementNode()       {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
