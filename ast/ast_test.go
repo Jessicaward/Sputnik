@@ -1,11 +1,11 @@
 package ast
 
 import (
-	"Sputnik/token"
+	"sputnik/token"
 	"testing"
 )
 
-func TestString (t *testing.T) { 
+func TestString(t *testing.T) {
 	program := &Program{
 		Statements: []Statement{
 			&LetStatement{
@@ -22,7 +22,7 @@ func TestString (t *testing.T) {
 		},
 	}
 
-	if program.String() != "let testVar = anotherVar;" {
-		t.Errorf("program.String() wrong. got = %q", program.String())
+	if program.String() != "let myVar = anotherVar;" {
+		t.Errorf("program.String() wrong. got=%q", program.String())
 	}
 }
